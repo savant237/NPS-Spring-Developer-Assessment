@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: com.nps.devassessment.controller.ControllerTests
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.076 s <<< FAILURE! - in com.nps.devassessment.controller.ControllerTests
+test4_shouldTestEndpointToUpdateExistingWorkflow(com.nps.devassessment.controller.ControllerTests)  Time elapsed: 0.012 s  <<< ERROR!
+org.hibernate.cfg.NotYetImplementedException: Not yet implemented!
+	at com.nps.devassessment.controller.ControllerTests.test4_shouldTestEndpointToUpdateExistingWorkflow(ControllerTests.java:92)
+
+test5_shouldTestPlacementFacade(com.nps.devassessment.controller.ControllerTests)  Time elapsed: 0.011 s  <<< ERROR!
+org.hibernate.cfg.NotYetImplementedException: Not yet implemented!
+	at com.nps.devassessment.controller.ControllerTests.test5_shouldTestPlacementFacade(ControllerTests.java:113)
+
+test3_shouldTestEndpointToCreateANewWorkflow(com.nps.devassessment.controller.ControllerTests)  Time elapsed: 0.011 s  <<< ERROR!
+org.hibernate.cfg.NotYetImplementedException: Not yet implemented!
+	at com.nps.devassessment.controller.ControllerTests.test3_shouldTestEndpointToCreateANewWorkflow(ControllerTests.java:75)
+
+test6_shouldDemonstrateRollbackOfModificationsDueToError(com.nps.devassessment.controller.ControllerTests)  Time elapsed: 0.011 s  <<< ERROR!
+org.hibernate.cfg.NotYetImplementedException: Not yet implemented!
+	at com.nps.devassessment.controller.ControllerTests.test6_shouldDemonstrateRollbackOfModificationsDueToError(ControllerTests.java:130)
+
+test2_shouldTestEndpointToRetrieveWorkflowsByYjbYId(com.nps.devassessment.controller.ControllerTests)  Time elapsed: 0.011 s  <<< ERROR!
+org.hibernate.cfg.NotYetImplementedException: Not yet implemented!
+	at com.nps.devassessment.controller.ControllerTests.test2_shouldTestEndpointToRetrieveWorkflowsByYjbYId(ControllerTests.java:61)
+
+test1_shouldTestEndpointToRetrieveWorkflowById(com.nps.devassessment.controller.ControllerTests)  Time elapsed: 0.011 s  <<< ERROR!
+org.hibernate.cfg.NotYetImplementedException: Not yet implemented!
+	at com.nps.devassessment.controller.ControllerTests.test1_shouldTestEndpointToRetrieveWorkflowById(ControllerTests.java:47)
+

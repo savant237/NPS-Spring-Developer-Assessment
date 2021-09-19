@@ -1,17 +1,30 @@
 package com.nps.devassessment.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nps.devassessment.entity.WorkflowEntity;
+import com.nps.devassessment.service.WorkflowNotFoundException;
+import com.nps.devassessment.service.WorkflowRepoService;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
 
 
 @SpringBootTest
@@ -22,9 +35,18 @@ public class ControllerTests {
 
     MockMvc mockMvc;
 
-
     @InjectMocks
     private TestsController testsController;
+
+    @Mock
+    private WorkflowRepoService workflowRepoService;
+
+    private static ObjectMapper objMapper;
+
+    @Autowired
+    public void setObjectMapper(final ObjectMapper objectMapper) {
+        ControllerTests.objMapper = objectMapper;
+    }
 
 
     @Before
@@ -44,7 +66,23 @@ public class ControllerTests {
         // Each of these two calls should return an apppropriate HTTP Status in accordance with REST best practices
         // Assert that the appropriate responses have been received from the endpoint
 
-        throw new NotYetImplementedException();
+        Long id = 66901L;
+        Long invalidId = 66666L;
+        WorkflowEntity workflow = getMockWorkflow();
+        when(workflowRepoService.findWorkflowById(id)).thenReturn(workflow);
+        when(workflowRepoService.findWorkflowById(invalidId)).thenThrow(new WorkflowNotFoundException("Workflow record not found for ID:: "+ id));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/id/"+id))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(objMapper.writeValueAsString(workflow)));
+
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/id/"+invalidId))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+
+
+
     }
 
 
@@ -58,7 +96,27 @@ public class ControllerTests {
         // Each of these two calls should return an apppropriate HTTP Status in accordance with REST best practices
         // Assert that the appropriate responses have been received from the endpoint
 
-        throw new NotYetImplementedException();
+        Long yjbYp = 11137L;
+        Long invalidYjbYp = 66666L;
+        WorkflowEntity workflow1 = getMockWorkflow();
+        WorkflowEntity workflow2 = getMockWorkflow();
+        workflow2.setId(66902L);
+
+        List<WorkflowEntity> workflowList = new ArrayList<>();
+        workflowList.add(workflow1);
+        workflowList.add(workflow2);
+
+        when(workflowRepoService.findByYjbYp(yjbYp)).thenReturn(workflowList);
+        when(workflowRepoService.findByYjbYp(invalidYjbYp)).thenThrow(new WorkflowNotFoundException("Workflow record not found for yjb_yp_id:: "+ invalidYjbYp));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/yjbYb/"+yjbYp))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(objMapper.writeValueAsString(workflowList)));
+
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/yjbYb/"+invalidYjbYp))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
 
@@ -129,4 +187,26 @@ public class ControllerTests {
 
         throw new NotYetImplementedException();
     }
+
+    private WorkflowEntity getMockWorkflow() {
+        WorkflowEntity workflow = new WorkflowEntity();
+        workflow.setYjbYp(11137L);
+        workflow.setWorkflowId(-24146L);
+        workflow.setId(66901L);
+        workflow.setWorkflowState("ADMITTED");
+        workflow.setKpfConfirmed(true);
+        workflow.setMetadata(null);
+        workflow.setCreated(null);
+        workflow.setModified(null);
+        workflow.setModifiedBy("craig.mcinnes");
+        workflow.setCreatedBy("lee.hunt");
+        workflow.setPreviousState("PLACED");
+        workflow.setTaskId("2bdaa827-c640-4ad8-b61a-4611961169c1");
+        workflow.setTaskMetadata(null);
+        workflow.setTaskStatus("ADMITTED");
+        workflow.setProcess("placementProcess");
+
+        return workflow;
+    }
+
 }
